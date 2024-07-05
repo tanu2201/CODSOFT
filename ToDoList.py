@@ -1,44 +1,61 @@
-def main():
-    tasks = []
+# Initialize an empty list to store tasks
+tasks = []
 
-    while True:
-        print("\n===== To-Do List =====")
-        print("1. Add Task")
-        print("2. Show Tasks")
-        print("3. Mark Task as Done")
-        print("4. Exit")
+# Function to add a task
+def add_task(task):
+    tasks.append(task)
 
-        choice = input("Enter your choice: ")
+# Function to delete a task
+def delete_task(task_number):
+    try:
+        del tasks[task_number - 1]
+    except:
+        print("Oh no! It looks like that task doesn't exist. Try again!")
 
-        if choice == '1':
-            print()
-            n_tasks = int(input("How may task you want to add: "))
-            
-            for i in range(n_tasks):
-                task = input("Enter the task: ")
-                tasks.append({"task": task, "done": False})
-                print("Task added!")
+# Function to update a task
+def update_task(task_number, new_task):
+    try:
+        tasks[task_number - 1] = new_task
+    except:
+        print("Oh no! It looks like that task doesn't exist. Try again!")
 
-        elif choice == '2':
-            print("\nTasks:")
-            for index, task in enumerate(tasks):
-                status = "Done" if task["done"] else "Not Done"
-                print(f"{index + 1}. {task['task']} - {status}")
+# Function to display tasks
+def display_tasks():
+    if not tasks:
+        print("You don't have any tasks yet! Why not add some?")
+    else:
+        print("Here are your tasks:")
+        for i, task in enumerate(tasks, start=1):
+            print(f"{i}. {task}")
 
-        elif choice == '3':
-            task_index = int(input("Enter the task number to mark as done: ")) - 1
-            if 0 <= task_index < len(tasks):
-                tasks[task_index]["done"] = True
-                print("Task marked as done!")
-            else:
-                print("Invalid task number.")
+# Main program
+while True:
+    print("\nWelcome to your task list!")
+    print("What would you like to do today?")
+    print("1. Add a new task to your list")
+    print("2. Remove a task from your list")
+    print("3. Update a task on your list")
+    print("4. View your tasks")
+    print("5. Quit and come back later")
+    choice = input("Choose an option: ")
 
-        elif choice == '4':
-            print("Exiting the To-Do List.")
-            break
-
-        else:
-            print("Invalid choice. Please try again.")
-
-if __name__ == "__main__":
-    main()
+    if choice == "1":
+        task = input("What's the new task you want to add? ")
+        add_task(task)
+        print("Task added! You're getting things done!")
+    elif choice == "2":
+        task_number = int(input("Which task number would you like to delete? "))
+        delete_task(task_number)
+        print("Task deleted! You're decluttering your list!")
+    elif choice == "3":
+        task_number = int(input("Which task number would you like to update? "))
+        new_task = input("What's the new task? ")
+        update_task(task_number, new_task)
+        print("Task updated! You're staying on top of things!")
+    elif choice == "4":
+        display_tasks()
+    elif choice == "5":
+        print("Goodbye for now! Come back soon to tackle your tasks!")
+        break
+    else:
+        print("Sorry, that's not a valid option. Try again, and I'll help you out!")
